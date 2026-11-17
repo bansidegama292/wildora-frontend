@@ -1,403 +1,114 @@
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import Navbar from "../Components/Navbar";
-// import Footer from "../Components/Footer";
-
-// function Booking() {
-//   const navigate = useNavigate();
-
-//   // લોગિન યુઝરની માહિતી
-//   const loggedInUser = JSON.parse(sessionStorage.getItem("wildoraUser") || "null");
-//   const token = sessionStorage.getItem("wildoraToken");
-
-//   // સ્ટેટ
-//   const [form, setForm] = useState({
-//     fullName: loggedInUser?.name || "",
-//     email: loggedInUser?.email || "",
-//     mobile: loggedInUser?.phone || "",
-//     visitDate: "",
-//     timeSlot: "",
-//   });
-
-//   const [tickets, setTickets] = useState({
-//     infant: 0,
-//     child: 0,
-//     adult: 0,
-//     senior: 0,
-//   });
-
-//   const [loading, setLoading] = useState(false);
-
-//   // ટિકિટના ભાવ
-//   const prices = {
-//     infant: 0,
-//     child: 100,
-//     adult: 200,
-//     senior: 120,
-//   };
-
-//   // ક્વોન્ટિટી બદલવાનું ફંક્શન
-//   const handleQuantity = (type, action) => {
-//     setTickets((prev) => {
-//       const current = prev[type];
-//       let newQty = current;
-//       if (action === "inc") newQty = Math.min(10, current + 1);
-//       if (action === "dec") newQty = Math.max(0, current - 1);
-//       return { ...prev, [type]: newQty };
-//     });
-//   };
-
-//   // ટોટલ ગણતરી
-//   const totalTickets =
-//     tickets.infant + tickets.child + tickets.adult + tickets.senior;
-//   const totalAmount =
-//     tickets.infant * prices.infant +
-//     tickets.child * prices.child +
-//     tickets.adult * prices.adult +
-//     tickets.senior * prices.senior;
-
-//   // ફોર્મ સબમિટ
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     if (!loggedInUser || !token) {
-//       alert("Please login first to book tickets!");
-//       navigate("/login");
-//       return;
-//     }
-//     if (totalTickets === 0) {
-//       alert("Please select at least one ticket.");
-//       return;
-//     }
-//     if (!form.visitDate || !form.timeSlot) {
-//       alert("Please select visit date and time slot.");
-//       return;
-//     }
-
-//     setLoading(true);
-
-//     setTimeout(() => {
-//       setLoading(false);
-//       alert("Booking Confirmed successfully!");
-//       navigate("/my-tickets");
-//     }, 1000);
-//   };
-
-//   return (
-//     <>
-//       <Navbar />
-
-//       <div className="min-h-screen bg-[#f3f7ef] py-16 px-4">
-//         <div className="max-w-6xl mx-auto">
-          
-//           {/* પેજ હેડર */}
-//           <div className="text-center mb-12">
-//             <h1 className="text-4xl md:text-5xl font-black text-forest-dark mb-3">
-//               Book Your Zoo Visit
-//             </h1>
-//             <p className="text-gray-500">
-//               Select your tickets and enjoy an unforgettable wildlife experience.
-//             </p>
-//           </div>
-
-//           {/* એજ ઇન્ફોર્મેશન કાર્ડ */}
-//           <div className="bg-white rounded-3xl p-6 md:p-8 mb-10 shadow-sm border border-gray-100">
-//             <div className="text-center mb-6">
-//               <p className="text-xs font-bold text-forest-light uppercase tracking-wider">
-//                 Before Booking
-//               </p>
-//               <h2 className="text-2xl font-black text-gray-800 mt-1">
-//                 Age Information
-//               </h2>
-//             </div>
-
-//             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-//               <div className="bg-green-50 rounded-2xl p-4 text-center border border-green-100">
-//                 <div className="text-3xl mb-1">👶</div>
-//                 <h3 className="font-bold text-gray-800">Child</h3>
-//                 <p className="text-sm text-gray-500">Below 12 years</p>
-//               </div>
-//               <div className="bg-green-50 rounded-2xl p-4 text-center border border-green-100">
-//                 <div className="text-3xl mb-1">🧑</div>
-//                 <h3 className="font-bold text-gray-800">Adult</h3>
-//                 <p className="text-sm text-gray-500">12 to 59 years</p>
-//               </div>
-//               <div className="bg-green-50 rounded-2xl p-4 text-center border border-green-100">
-//                 <div className="text-3xl mb-1">👴</div>
-//                 <h3 className="font-bold text-gray-800">Senior Citizen</h3>
-//                 <p className="text-sm text-gray-500">60 years and above</p>
-//               </div>
-//             </div>
-//           </div>
-
-//           {/* 🔥 ટિકિટ સિલેક્શન (ફૂલ વિડ્થ) */}
-//           <div className="mb-8">
-//             <div className="flex items-center justify-between mb-4">
-//               <h2 className="text-2xl font-bold text-gray-800">Select Tickets</h2>
-//               <span className="bg-forest-dark text-white px-4 py-1.5 rounded-full text-sm font-bold">
-//                 {totalTickets} Selected
-//               </span>
-//             </div>
-
-//             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              
-//               {/* Infant */}
-//               <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col justify-between">
-//                 <div className="flex flex-col items-start gap-2">
-//                   <span className="bg-pink-100 text-pink-600 p-1.5 rounded-lg text-lg">🍼</span>
-//                   <div>
-//                     <h3 className="font-bold text-gray-800 text-sm">Infant</h3>
-//                     <p className="text-xs text-gray-500">0-3 yrs</p>
-//                   </div>
-//                 </div>
-//                 <div className="mt-4">
-//                   <p className="text-lg font-black text-forest-dark mb-2">₹{prices.infant}</p>
-//                   <div className="flex items-center justify-between bg-gray-50 rounded-lg p-1">
-//                     <button onClick={() => handleQuantity('infant', 'dec')} className="w-7 h-7 rounded bg-white flex items-center justify-center font-bold shadow-sm hover:bg-gray-100 transition">-</button>
-//                     <span className="font-bold text-sm">{tickets.infant}</span>
-//                     <button onClick={() => handleQuantity('infant', 'inc')} className="w-7 h-7 rounded bg-forest-light text-white flex items-center justify-center font-bold shadow-sm hover:bg-forest-dark transition">+</button>
-//                   </div>
-//                 </div>
-//               </div>
-
-//               {/* Child */}
-//               <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col justify-between">
-//                 <div className="flex flex-col items-start gap-2">
-//                   <span className="bg-blue-100 text-blue-600 p-1.5 rounded-lg text-lg">🧒</span>
-//                   <div>
-//                     <h3 className="font-bold text-gray-800 text-sm">Child</h3>
-//                     <p className="text-xs text-gray-500">3-12 yrs</p>
-//                   </div>
-//                 </div>
-//                 <div className="mt-4">
-//                   <p className="text-lg font-black text-forest-dark mb-2">₹{prices.child}</p>
-//                   <div className="flex items-center justify-between bg-gray-50 rounded-lg p-1">
-//                     <button onClick={() => handleQuantity('child', 'dec')} className="w-7 h-7 rounded bg-white flex items-center justify-center font-bold shadow-sm hover:bg-gray-100 transition">-</button>
-//                     <span className="font-bold text-sm">{tickets.child}</span>
-//                     <button onClick={() => handleQuantity('child', 'inc')} className="w-7 h-7 rounded bg-forest-light text-white flex items-center justify-center font-bold shadow-sm hover:bg-forest-dark transition">+</button>
-//                   </div>
-//                 </div>
-//               </div>
-
-//               {/* Adult */}
-//               <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col justify-between">
-//                 <div className="flex flex-col items-start gap-2">
-//                   <span className="bg-yellow-100 text-yellow-600 p-1.5 rounded-lg text-lg">🧑</span>
-//                   <div>
-//                     <h3 className="font-bold text-gray-800 text-sm">Adult</h3>
-//                     <p className="text-xs text-gray-500">12-59 yrs</p>
-//                   </div>
-//                 </div>
-//                 <div className="mt-4">
-//                   <p className="text-lg font-black text-forest-dark mb-2">₹{prices.adult}</p>
-//                   <div className="flex items-center justify-between bg-gray-50 rounded-lg p-1">
-//                     <button onClick={() => handleQuantity('adult', 'dec')} className="w-7 h-7 rounded bg-white flex items-center justify-center font-bold shadow-sm hover:bg-gray-100 transition">-</button>
-//                     <span className="font-bold text-sm">{tickets.adult}</span>
-//                     <button onClick={() => handleQuantity('adult', 'inc')} className="w-7 h-7 rounded bg-forest-light text-white flex items-center justify-center font-bold shadow-sm hover:bg-forest-dark transition">+</button>
-//                   </div>
-//                 </div>
-//               </div>
-
-//               {/* Senior */}
-//               <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col justify-between">
-//                 <div className="flex flex-col items-start gap-2">
-//                   <span className="bg-purple-100 text-purple-600 p-1.5 rounded-lg text-lg">👴</span>
-//                   <div>
-//                     <h3 className="font-bold text-gray-800 text-sm">Senior</h3>
-//                     <p className="text-xs text-gray-500">60+ yrs</p>
-//                   </div>
-//                 </div>
-//                 <div className="mt-4">
-//                   <p className="text-lg font-black text-forest-dark mb-2">₹{prices.senior}</p>
-//                   <div className="flex items-center justify-between bg-gray-50 rounded-lg p-1">
-//                     <button onClick={() => handleQuantity('senior', 'dec')} className="w-7 h-7 rounded bg-white flex items-center justify-center font-bold shadow-sm hover:bg-gray-100 transition">-</button>
-//                     <span className="font-bold text-sm">{tickets.senior}</span>
-//                     <button onClick={() => handleQuantity('senior', 'inc')} className="w-7 h-7 rounded bg-forest-light text-white flex items-center justify-center font-bold shadow-sm hover:bg-forest-dark transition">+</button>
-//                   </div>
-//                 </div>
-//               </div>
-
-//             </div>
-//           </div>
-
-//           {/* 🔥 બુકિંગ ફોર્મ અને સમરી (સાથે સાથે) */}
-//           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-            
-//             {/* ડાબી બાજુ: ફોર્મ (૨ કોલમ લે છે) */}
-//             <div className="lg:col-span-2 bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-200">
-//               <h2 className="text-2xl font-bold text-gray-800 mb-6">Booking Details</h2>
-//               <form id="bookingForm" onSubmit={handleSubmit} className="grid sm:grid-cols-2 gap-5">
-//                 <div>
-//                   <label className="block text-sm font-bold text-gray-700 mb-1">Full Name</label>
-//                   <input type="text" value={form.fullName} onChange={(e) => setForm({...form, fullName: e.target.value})} placeholder="Full Name" className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-forest-light" required />
-//                 </div>
-//                 <div>
-//                   <label className="block text-sm font-bold text-gray-700 mb-1">Email Address</label>
-//                   <input type="email" value={form.email} onChange={(e) => setForm({...form, email: e.target.value})} placeholder="Email" className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-forest-light" required />
-//                 </div>
-//                 <div>
-//                   <label className="block text-sm font-bold text-gray-700 mb-1">Mobile Number</label>
-//                   <input type="tel" value={form.mobile} onChange={(e) => setForm({...form, mobile: e.target.value})} placeholder="Mobile Number" className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-forest-light" required />
-//                 </div>
-//                 <div>
-//                   <label className="block text-sm font-bold text-gray-700 mb-1">Visit Date</label>
-//                   <input type="date" value={form.visitDate} onChange={(e) => setForm({...form, visitDate: e.target.value})} className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-forest-light" required />
-//                 </div>
-//                 <div className="sm:col-span-2">
-//                   <label className="block text-sm font-bold text-gray-700 mb-1">Time Slot</label>
-//                   <select value={form.timeSlot} onChange={(e) => setForm({...form, timeSlot: e.target.value})} className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-forest-light" required>
-//                     <option value="">Choose Visit Time</option>
-//                     <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
-//                     <option value="11:00 AM - 01:00 PM">11:00 AM - 01:00 PM</option>
-//                     <option value="01:00 PM - 03:00 PM">01:00 PM - 03:00 PM</option>
-//                     <option value="03:00 PM - 05:00 PM">03:00 PM - 05:00 PM</option>
-//                   </select>
-//                 </div>
-//               </form>
-//             </div>
-
-//             {/* જમણી બાજુ: બુકિંગ સમરી (૧ કોલમ લે છે, સ્ટીકી છે) */}
-//             <div className="lg:col-span-1 sticky top-24">
-//               <div className="bg-forest-dark text-white rounded-3xl p-6 md:p-8 shadow-xl">
-//                 <h2 className="text-2xl font-bold mb-1">Booking Summary</h2>
-//                 <p className="text-green-200 text-sm mb-6">Select tickets to see your booking summary.</p>
-
-//                 <div className="space-y-3 mb-6">
-//                   {tickets.infant > 0 && <div className="flex justify-between text-sm border-b border-green-800 pb-2"><span>Infant x {tickets.infant}</span><span>₹{tickets.infant * prices.infant}</span></div>}
-//                   {tickets.child > 0 && <div className="flex justify-between text-sm border-b border-green-800 pb-2"><span>Child x {tickets.child}</span><span>₹{tickets.child * prices.child}</span></div>}
-//                   {tickets.adult > 0 && <div className="flex justify-between text-sm border-b border-green-800 pb-2"><span>Adult x {tickets.adult}</span><span>₹{tickets.adult * prices.adult}</span></div>}
-//                   {tickets.senior > 0 && <div className="flex justify-between text-sm border-b border-green-800 pb-2"><span>Senior x {tickets.senior}</span><span>₹{tickets.senior * prices.senior}</span></div>}
-//                 </div>
-
-//                 <div className="space-y-4 pt-4 border-t border-green-700">
-//                   <div className="flex justify-between items-center text-green-100">
-//                     <span>Total Tickets</span>
-//                     <span>{totalTickets}</span>
-//                   </div>
-//                   <div className="flex justify-between items-center">
-//                     <span className="text-lg font-bold">Total Amount</span>
-//                     <span className="text-3xl font-black text-lime-300">₹{totalAmount}</span>
-//                   </div>
-//                 </div>
-
-//                 <button 
-//                   type="submit" 
-//                   form="bookingForm"
-//                   disabled={loading || totalTickets === 0}
-//                   className="w-full mt-8 bg-lime-400 text-forest-dark py-3.5 rounded-xl font-bold text-lg hover:bg-lime-300 transition disabled:opacity-50"
-//                 >
-//                   {loading ? "Processing..." : "Confirm Booking →"}
-//                 </button>
-//               </div>
-//             </div>
-
-//           </div>
-//         </div>
-//       </div>
-
-//       <Footer />
-//     </>
-//   );
-// }
-
-// export default Booking;
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Booking() {
   const navigate = useNavigate();
 
-  // 🔥 આ બે લાઈન ખૂટતી હતી, એટલે એરર આવતી હતી
   const loggedInUser = JSON.parse(sessionStorage.getItem("wildoraUser") || "null");
   const token = sessionStorage.getItem("wildoraToken");
 
   const [form, setForm] = useState({
-    fullName: loggedInUser?.name || "",
+    name: loggedInUser?.name || "",
     email: loggedInUser?.email || "",
-    mobile: loggedInUser?.phone || "",
+    phone: loggedInUser?.phone || "",
     visitDate: "",
     timeSlot: "",
   });
 
-  const [tickets, setTickets] = useState({
-    infant: 0,
-    child: 0,
-    adult: 0,
-    senior: 0,
-  });
-
+  // ટિકિટની સંખ્યા સ્ટોર કરવા માટેનું સ્ટેટ
+  const [quantities, setQuantities] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const prices = {
-    infant: 0,
-    child: 100,
-    adult: 200,
-    senior: 120,
+  // ટિકિટના પ્રકારો અને ભાવ
+  const ticketTypes = [
+    { id: "infant", name: "Infant Ticket", price: 0, ageGroup: "0-3 years", icon: "🍼" },
+    { id: "child", name: "Child Ticket", price: 100, ageGroup: "3-12 years", icon: "🧒" },
+    { id: "adult", name: "Adult Ticket", price: 200, ageGroup: "12-59 years", icon: "🧑" },
+    { id: "senior", name: "Senior Ticket", price: 120, ageGroup: "60+ years", icon: "👴" },
+  ];
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleQuantity = (type, action) => {
-    setTickets((prev) => {
-      const current = prev[type];
-      let newQty = current;
-      if (action === "inc") newQty = Math.min(10, current + 1);
-      if (action === "dec") newQty = Math.max(0, current - 1);
-      return { ...prev, [type]: newQty };
-    });
+  const handleQuantity = (id, value) => {
+    const quantity = Math.max(0, Math.min(10, Number(value) || 0));
+    setQuantities((prev) => ({ ...prev, [id]: quantity }));
   };
 
-  const totalTickets = tickets.infant + tickets.child + tickets.adult + tickets.senior;
-  const totalAmount =
-    tickets.infant * prices.infant +
-    tickets.child * prices.child +
-    tickets.adult * prices.adult +
-    tickets.senior * prices.senior;
+  // કુલ ટિકિટ અને રકમની ગણતરી
+  const selectedTickets = ticketTypes.filter((t) => Number(quantities[t.id] || 0) > 0);
+  
+  const totalQuantity = selectedTickets.reduce(
+    (sum, t) => sum + Number(quantities[t.id]),
+    0
+  );
+
+  const totalAmount = selectedTickets.reduce(
+    (sum, t) => sum + Number(quantities[t.id]) * Number(t.price),
+    0
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // લોગિન ચેક
     if (!loggedInUser || !token) {
-      alert("Please login first to book tickets!");
+      toast.error("Please login first to book tickets.");
       navigate("/login");
       return;
     }
-    if (totalTickets === 0) {
-      alert("Please select at least one ticket.");
+    // વેલિડેશન
+    if (totalQuantity === 0) {
+      toast.warning("Please select at least one ticket.");
       return;
     }
-    if (!form.visitDate || !form.timeSlot) {
-      alert("Please select visit date and time slot.");
+    if (!form.name || !form.email || !form.phone || !form.visitDate || !form.timeSlot) {
+      toast.warning("Please fill all required details.");
+      return;
+    }
+    if (!/^[0-9]{10}$/.test(form.phone)) {
+      toast.error("Please enter a valid 10 digit mobile number.");
       return;
     }
 
     setLoading(true);
 
-    // બેકએન્ડમાં મોકલવા માટે ડેટા
-    const bookingData = {
-      userId: loggedInUser._id,
-      bookingDate: form.visitDate,
-      timeSlot: form.timeSlot,
-      ticketItems: [
-        tickets.infant > 0 && { category: "Infant", quantity: tickets.infant, subtotal: tickets.infant * prices.infant },
-        tickets.child > 0 && { category: "Child", quantity: tickets.child, subtotal: tickets.child * prices.child },
-        tickets.adult > 0 && { category: "Adult", quantity: tickets.adult, subtotal: tickets.adult * prices.adult },
-        tickets.senior > 0 && { category: "Senior", quantity: tickets.senior, subtotal: tickets.senior * prices.senior },
-      ].filter(Boolean),
-      guestInfo: {
-        fullName: form.fullName,
-        email: form.email,
-        mobile: form.mobile,
-      },
-      totalAmount: totalAmount,
-    };
-
     try {
+      // બેકએન્ડમાં મોકલવા માટે ડેટા તૈયાર કરો (Number() નો ઉપયોગ કરીને NaN અટકાવ્યું છે)
+      const ticketItems = selectedTickets.map((t) => {
+        const qty = Number(quantities[t.id]) || 0;
+        const price = Number(t.price) || 0;
+        return {
+          category: t.name,
+          quantity: qty,
+          subtotal: qty * price,
+        };
+      });
+
+      const bookingData = {
+        userId: loggedInUser._id,
+        bookingDate: form.visitDate,
+        timeSlot: form.timeSlot,
+        ticketItems: ticketItems,
+        guestInfo: {
+          fullName: form.name,
+          email: form.email,
+          mobile: form.phone,
+        },
+        totalAmount: Number(totalAmount),
+      };
+
       const response = await fetch("http://localhost:5000/api/bookings/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // 🔥 હવે token ડિફાઇન થયું છે
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(bookingData),
       });
@@ -405,229 +116,202 @@ function Booking() {
       const data = await response.json();
 
       if (response.ok) {
-        alert("🎉 Booking Confirmed successfully!");
-        navigate("/my-tickets");
+        toast.success("🎉 Booking Confirmed successfully!");
+        // બુકિંગ સફળ થાય તો 1.5 સેકન્ડ પછી My Tickets પેજ પર મોકલો
+        setTimeout(() => {
+          navigate("/my-tickets");
+        }, 1500);
       } else {
-        alert(data.message || "Booking failed");
+        toast.error(data.message || "Booking failed");
       }
     } catch (error) {
       console.error(error);
-      alert("Backend connection failed!");
+      toast.error("Backend connection failed!");
     } finally {
       setLoading(false);
     }
   };
 
+  const today = new Date().toLocaleDateString("en-CA");
+
   return (
     <>
       <Navbar />
+      <div className="min-h-screen bg-[#f3f7ef]">
+        <ToastContainer position="top-right" autoClose={3000} theme="colored" />
 
-      <div className="min-h-screen bg-[#f3f7ef] py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          
-          {/* પેજ હેડર */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-black text-forest-dark mb-3">
-              Book Your Zoo Visit
+        {/* હીરો સેક્શન */}
+        <section className="relative overflow-hidden bg-gradient-to-r from-green-950 via-green-800 to-green-700 py-20 px-6 text-white">
+          <div className="max-w-7xl mx-auto text-center relative z-10">
+            <p className="text-lime-300 uppercase tracking-[4px] text-sm font-semibold">
+              Wildora Wildlife Park
+            </p>
+            <h1 className="text-4xl md:text-6xl font-extrabold mt-5">
+              Book Your <span className="text-lime-300">Tickets</span>
             </h1>
-            <p className="text-gray-500">
-              Select your tickets and enjoy an unforgettable wildlife experience.
+            <p className="max-w-2xl mx-auto text-green-100 mt-5 text-lg">
+              Choose your tickets and enjoy an unforgettable wildlife experience with your family.
             </p>
           </div>
+          <div className="absolute -right-16 -bottom-24 text-[220px] opacity-10">🦁</div>
+        </section>
 
-          {/* એજ ઇન્ફોર્મેશન કાર્ડ */}
-          <div className="bg-white rounded-3xl p-6 md:p-8 mb-10 shadow-sm border border-gray-100">
-            <div className="text-center mb-6">
-              <p className="text-xs font-bold text-forest-light uppercase tracking-wider">
-                Before Booking
-              </p>
-              <h2 className="text-2xl font-black text-gray-800 mt-1">
-                Age Information
-              </h2>
+        {/* એજ ઇન્ફોર્મેશન */}
+        <section className="max-w-7xl mx-auto px-6 pt-14">
+          <div className="bg-white rounded-3xl shadow-md p-7 md:p-10 border border-green-100">
+            <div className="text-center mb-8">
+              <p className="text-green-700 font-bold uppercase tracking-widest text-sm">Before Booking</p>
+              <h2 className="text-3xl font-extrabold text-green-950 mt-2">Age Information</h2>
+              <p className="text-gray-500 mt-2">Please check the age categories before selecting tickets.</p>
             </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+              <div className="bg-green-50 rounded-2xl p-6 text-center">
+                <div className="text-4xl mb-3">👶</div>
+                <h3 className="text-xl font-bold text-green-950">Child</h3>
+                <p className="text-gray-600 mt-2">Below 12 years</p>
+              </div>
+              <div className="bg-green-50 rounded-2xl p-6 text-center">
+                <div className="text-4xl mb-3">🧑</div>
+                <h3 className="text-xl font-bold text-green-950">Adult</h3>
+                <p className="text-gray-600 mt-2">12 to 59 years</p>
+              </div>
+              <div className="bg-green-50 rounded-2xl p-6 text-center">
+                <div className="text-4xl mb-3">👴</div>
+                <h3 className="text-xl font-bold text-green-950">Senior Citizen</h3>
+                <p className="text-gray-600 mt-2">60 years and above</p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-green-50 rounded-2xl p-4 text-center border border-green-100">
-                <div className="text-3xl mb-1">👶</div>
-                <h3 className="font-bold text-gray-800">Child</h3>
-                <p className="text-sm text-gray-500">Below 12 years</p>
-              </div>
-              <div className="bg-green-50 rounded-2xl p-4 text-center border border-green-100">
-                <div className="text-3xl mb-1">🧑</div>
-                <h3 className="font-bold text-gray-800">Adult</h3>
-                <p className="text-sm text-gray-500">12 to 59 years</p>
-              </div>
-              <div className="bg-green-50 rounded-2xl p-4 text-center border border-green-100">
-                <div className="text-3xl mb-1">👴</div>
-                <h3 className="font-bold text-gray-800">Senior Citizen</h3>
-                <p className="text-sm text-gray-500">60 years and above</p>
-              </div>
+        {/* ટિકિટ સિલેક્શન */}
+        <section className="max-w-7xl mx-auto px-6 py-16">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-10">
+            <div>
+              <p className="text-green-700 font-bold uppercase tracking-widest text-sm">Select Your Tickets</p>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-green-950 mt-2">Available Ticket Types</h2>
+            </div>
+            <div className="bg-green-900 text-white px-6 py-3 rounded-full">
+              Selected: {totalQuantity} Tickets
             </div>
           </div>
 
-          {/* ટિકિટ સિલેક્શન */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-bold text-gray-800">Select Tickets</h2>
-              <span className="bg-forest-dark text-white px-4 py-1.5 rounded-full text-sm font-bold">
-                {totalTickets} Selected
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              
-              {/* Infant */}
-              <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col justify-between">
-                <div className="flex flex-col items-start gap-2">
-                  <span className="bg-pink-100 text-pink-600 p-1.5 rounded-lg text-lg">🍼</span>
-                  <div>
-                    <h3 className="font-bold text-gray-800 text-sm">Infant</h3>
-                    <p className="text-xs text-gray-500">0-3 yrs</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {ticketTypes.map((ticket) => {
+              const quantity = Number(quantities[ticket.id] || 0);
+              return (
+                <div
+                  key={ticket.id}
+                  className={`bg-white rounded-2xl p-4 shadow-md border-2 transition duration-300 ${
+                    quantity > 0 ? "border-green-700 shadow-xl" : "border-transparent hover:border-green-200 hover:-translate-y-1"
+                  }`}
+                >
+                  <div className="flex justify-between items-start">
+                    <div className="w-11 h-11 bg-green-100 rounded-xl flex items-center justify-center text-2xl">{ticket.icon}</div>
+                    {quantity > 0 && <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Selected ✓</span>}
+                  </div>
+                  <h3 className="text-xl font-extrabold text-green-950 mt-4">{ticket.name}</h3>
+                  <p className="text-gray-500 mt-2 min-h-10 text-sm">Zoo entry ticket for {ticket.ageGroup}</p>
+                  <div className="mt-3">
+                    <span className="text-2xl font-extrabold text-green-800">₹{ticket.price}</span>
+                    <span className="text-gray-500 ml-1 text-sm">/ person</span>
+                  </div>
+                  <p className="text-sm text-gray-500 mt-2">Age Group: {ticket.ageGroup}</p>
+                  <div className="border-t border-gray-100 mt-4 pt-4">
+                    <label className="block text-gray-700 font-semibold mb-2 text-sm">Number of Tickets</label>
+                    <div className="flex items-center justify-between gap-3">
+                      <button type="button" onClick={() => handleQuantity(ticket.id, quantity - 1)} disabled={quantity === 0} className="w-9 h-9 rounded-lg bg-green-100 text-green-900 font-bold text-xl disabled:opacity-40">−</button>
+                      <span className="text-lg font-bold text-green-950">{quantity}</span>
+                      <button type="button" onClick={() => handleQuantity(ticket.id, quantity + 1)} disabled={quantity >= 10} className="w-9 h-9 rounded-lg bg-green-900 text-white font-bold text-xl disabled:opacity-40">+</button>
+                    </div>
+                    {quantity > 0 && <p className="text-green-800 font-bold mt-3 text-sm">Subtotal: ₹{Number(ticket.price) * quantity}</p>}
                   </div>
                 </div>
-                <div className="mt-4">
-                  <p className="text-lg font-black text-forest-dark mb-2">₹{prices.infant}</p>
-                  <div className="flex items-center justify-between bg-gray-50 rounded-lg p-1">
-                    <button onClick={() => handleQuantity('infant', 'dec')} className="w-7 h-7 rounded bg-white flex items-center justify-center font-bold shadow-sm hover:bg-gray-100 transition">-</button>
-                    <span className="font-bold text-sm">{tickets.infant}</span>
-                    <button onClick={() => handleQuantity('infant', 'inc')} className="w-7 h-7 rounded bg-forest-light text-white flex items-center justify-center font-bold shadow-sm hover:bg-forest-dark transition">+</button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Child */}
-              <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col justify-between">
-                <div className="flex flex-col items-start gap-2">
-                  <span className="bg-blue-100 text-blue-600 p-1.5 rounded-lg text-lg">🧒</span>
-                  <div>
-                    <h3 className="font-bold text-gray-800 text-sm">Child</h3>
-                    <p className="text-xs text-gray-500">3-12 yrs</p>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <p className="text-lg font-black text-forest-dark mb-2">₹{prices.child}</p>
-                  <div className="flex items-center justify-between bg-gray-50 rounded-lg p-1">
-                    <button onClick={() => handleQuantity('child', 'dec')} className="w-7 h-7 rounded bg-white flex items-center justify-center font-bold shadow-sm hover:bg-gray-100 transition">-</button>
-                    <span className="font-bold text-sm">{tickets.child}</span>
-                    <button onClick={() => handleQuantity('child', 'inc')} className="w-7 h-7 rounded bg-forest-light text-white flex items-center justify-center font-bold shadow-sm hover:bg-forest-dark transition">+</button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Adult */}
-              <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col justify-between">
-                <div className="flex flex-col items-start gap-2">
-                  <span className="bg-yellow-100 text-yellow-600 p-1.5 rounded-lg text-lg">🧑</span>
-                  <div>
-                    <h3 className="font-bold text-gray-800 text-sm">Adult</h3>
-                    <p className="text-xs text-gray-500">12-59 yrs</p>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <p className="text-lg font-black text-forest-dark mb-2">₹{prices.adult}</p>
-                  <div className="flex items-center justify-between bg-gray-50 rounded-lg p-1">
-                    <button onClick={() => handleQuantity('adult', 'dec')} className="w-7 h-7 rounded bg-white flex items-center justify-center font-bold shadow-sm hover:bg-gray-100 transition">-</button>
-                    <span className="font-bold text-sm">{tickets.adult}</span>
-                    <button onClick={() => handleQuantity('adult', 'inc')} className="w-7 h-7 rounded bg-forest-light text-white flex items-center justify-center font-bold shadow-sm hover:bg-forest-dark transition">+</button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Senior */}
-              <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col justify-between">
-                <div className="flex flex-col items-start gap-2">
-                  <span className="bg-purple-100 text-purple-600 p-1.5 rounded-lg text-lg">👴</span>
-                  <div>
-                    <h3 className="font-bold text-gray-800 text-sm">Senior</h3>
-                    <p className="text-xs text-gray-500">60+ yrs</p>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <p className="text-lg font-black text-forest-dark mb-2">₹{prices.senior}</p>
-                  <div className="flex items-center justify-between bg-gray-50 rounded-lg p-1">
-                    <button onClick={() => handleQuantity('senior', 'dec')} className="w-7 h-7 rounded bg-white flex items-center justify-center font-bold shadow-sm hover:bg-gray-100 transition">-</button>
-                    <span className="font-bold text-sm">{tickets.senior}</span>
-                    <button onClick={() => handleQuantity('senior', 'inc')} className="w-7 h-7 rounded bg-forest-light text-white flex items-center justify-center font-bold shadow-sm hover:bg-forest-dark transition">+</button>
-                  </div>
-                </div>
-              </div>
-
-            </div>
+              );
+            })}
           </div>
+        </section>
 
-          {/* બુકિંગ ફોર્મ અને સમરી */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        {/* બુકિંગ ફોર્મ અને સમરી */}
+        <section className="max-w-7xl mx-auto px-6 pb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
             
-            <div className="lg:col-span-2 bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-200">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">Booking Details</h2>
-              <form id="bookingForm" onSubmit={handleSubmit} className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Full Name</label>
-                  <input type="text" value={form.fullName} onChange={(e) => setForm({...form, fullName: e.target.value})} placeholder="Full Name" className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-forest-light" required />
+            <div className="lg:col-span-3 bg-white rounded-3xl shadow-lg p-7 md:p-10">
+              <p className="text-green-700 font-bold uppercase tracking-widest text-sm">Your Information</p>
+              <h2 className="text-3xl font-extrabold text-green-950 mt-2 mb-8">Booking Details</h2>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block font-semibold text-gray-700 mb-2">Full Name</label>
+                    <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Enter full name" required className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-600" />
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-gray-700 mb-2">Email Address</label>
+                    <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="Enter email address" required className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-600" />
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-gray-700 mb-2">Mobile Number</label>
+                    <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="10 digit mobile number" pattern="[0-9]{10}" maxLength="10" required className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-600" />
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-gray-700 mb-2">Visit Date</label>
+                    <input type="date" name="visitDate" min={today} value={form.visitDate} onChange={handleChange} required className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-600" />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="block font-semibold text-gray-700 mb-2">Time Slot</label>
+                    <select name="timeSlot" value={form.timeSlot} onChange={handleChange} required className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-600">
+                      <option value="">Choose Visit Time</option>
+                      <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
+                      <option value="11:00 AM - 01:00 PM">11:00 AM - 01:00 PM</option>
+                      <option value="01:00 PM - 03:00 PM">01:00 PM - 03:00 PM</option>
+                      <option value="03:00 PM - 05:00 PM">03:00 PM - 05:00 PM</option>
+                    </select>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Email Address</label>
-                  <input type="email" value={form.email} onChange={(e) => setForm({...form, email: e.target.value})} placeholder="Email" className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-forest-light" required />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Mobile Number</label>
-                  <input type="tel" value={form.mobile} onChange={(e) => setForm({...form, mobile: e.target.value})} placeholder="Mobile Number" className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-forest-light" required />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Visit Date</label>
-                  <input type="date" value={form.visitDate} onChange={(e) => setForm({...form, visitDate: e.target.value})} className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-forest-light" required />
-                </div>
-                <div className="sm:col-span-2">
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Time Slot</label>
-                  <select value={form.timeSlot} onChange={(e) => setForm({...form, timeSlot: e.target.value})} className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-forest-light" required>
-                    <option value="">Choose Visit Time</option>
-                    <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
-                    <option value="11:00 AM - 01:00 PM">11:00 AM - 01:00 PM</option>
-                    <option value="01:00 PM - 03:00 PM">01:00 PM - 03:00 PM</option>
-                    <option value="03:00 PM - 05:00 PM">03:00 PM - 05:00 PM</option>
-                  </select>
-                </div>
+                <button type="submit" disabled={loading || totalQuantity === 0} className="w-full bg-green-900 text-white py-4 rounded-xl font-bold text-lg hover:bg-green-800 transition disabled:opacity-50">
+                  {loading ? "Booking..." : "Confirm Booking →"}
+                </button>
               </form>
             </div>
 
-            <div className="lg:col-span-1 sticky top-24">
-              <div className="bg-forest-dark text-white rounded-3xl p-6 md:p-8 shadow-xl">
-                <h2 className="text-2xl font-bold mb-1">Booking Summary</h2>
-                <p className="text-green-200 text-sm mb-6">Select tickets to see your booking summary.</p>
+            <div className="lg:col-span-2">
+              <div className="bg-green-950 text-white rounded-3xl p-7 md:p-8 sticky top-24">
+                <p className="text-lime-300 uppercase tracking-widest text-sm font-bold">Your Selection</p>
+                <h2 className="text-2xl font-extrabold mt-2 mb-7">Booking Summary</h2>
 
-                <div className="space-y-3 mb-6">
-                  {tickets.infant > 0 && <div className="flex justify-between text-sm border-b border-green-800 pb-2"><span>Infant x {tickets.infant}</span><span>₹{tickets.infant * prices.infant}</span></div>}
-                  {tickets.child > 0 && <div className="flex justify-between text-sm border-b border-green-800 pb-2"><span>Child x {tickets.child}</span><span>₹{tickets.child * prices.child}</span></div>}
-                  {tickets.adult > 0 && <div className="flex justify-between text-sm border-b border-green-800 pb-2"><span>Adult x {tickets.adult}</span><span>₹{tickets.adult * prices.adult}</span></div>}
-                  {tickets.senior > 0 && <div className="flex justify-between text-sm border-b border-green-800 pb-2"><span>Senior x {tickets.senior}</span><span>₹{tickets.senior * prices.senior}</span></div>}
-                </div>
+                {selectedTickets.length === 0 ? (
+                  <p className="text-green-200">Select tickets to see your booking summary.</p>
+                ) : (
+                  <div className="space-y-5">
+                    {selectedTickets.map((ticket) => (
+                      <div key={ticket.id} className="flex justify-between gap-3 border-b border-green-800 pb-4">
+                        <div>
+                          <p className="font-bold">{ticket.name}</p>
+                          <p className="text-green-200 text-sm mt-1">₹{ticket.price} × {quantities[ticket.id]}</p>
+                        </div>
+                        <p className="font-bold">₹{Number(ticket.price) * Number(quantities[ticket.id])}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
-                <div className="space-y-4 pt-4 border-t border-green-700">
-                  <div className="flex justify-between items-center text-green-100">
+                <div className="border-t border-green-700 mt-7 pt-6 space-y-3">
+                  <div className="flex justify-between text-green-100">
                     <span>Total Tickets</span>
-                    <span>{totalTickets}</span>
+                    <span>{totalQuantity}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-bold">Total Amount</span>
-                    <span className="text-3xl font-black text-lime-300">₹{totalAmount}</span>
+                    <span className="text-3xl font-extrabold text-lime-300">₹{totalAmount}</span>
                   </div>
                 </div>
-
-                <button 
-                  type="submit" 
-                  form="bookingForm"
-                  disabled={loading || totalTickets === 0}
-                  className="w-full mt-8 bg-lime-400 text-forest-dark py-3.5 rounded-xl font-bold text-lg hover:bg-lime-300 transition disabled:opacity-50"
-                >
-                  {loading ? "Processing..." : "Confirm Booking →"}
-                </button>
+                <p className="text-green-200 text-xs mt-7 leading-5">Your booking details will be saved after you confirm your booking.</p>
               </div>
             </div>
 
           </div>
-        </div>
+        </section>
       </div>
-
       <Footer />
     </>
   );

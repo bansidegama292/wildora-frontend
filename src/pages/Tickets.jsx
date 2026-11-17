@@ -1,149 +1,12 @@
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import Navbar from "../Components/Navbar";
-// import Footer from "../Components/Footer";
 
-// function Login() {
-//   const navigate = useNavigate();
-//   const [showPassword, setShowPassword] = useState(false);
-  
-//   // ફોર્મની સ્ટેટ
-//   const [form, setForm] = useState({ email: "", password: "" });
-
-//   const handleChange = (e) => {
-//     setForm({ ...form, [e.target.name]: e.target.value });
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault(); 
-    
-//     console.log("Login Data:", form);
-    
-//     // 🔥 અહીં 'Tickets' ની જગ્યાએ 'tickets' (નાના અક્ષરે) કરો
-//     navigate("/tickets"); 
-//   };
-
-//   return (
-//     <>
-//       <Navbar />
-      
-//       <div className="min-h-screen bg-[#f4f7f2] flex items-center justify-center py-16 px-4 relative overflow-hidden">
-        
-//         {/* લોગિન કાર્ડ (Split Layout) */}
-//         <div className="bg-white p-2 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white w-full max-w-4xl flex flex-col md:flex-row relative z-10 overflow-hidden">
-          
-//           {/* ડાબી બાજુ: ઝૂ (Zoo) નો ફોટો */}
-//           <div className="hidden md:block md:w-1/2 relative">
-//             <img
-//               src="https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=80&w=1000&auto=format&fit=crop"
-//               alt="Zoo Animal"
-//               className="absolute inset-0 w-full h-full object-cover rounded-l-[1.5rem]"
-//             />
-//             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent rounded-l-[1.5rem] flex flex-col justify-end p-10">
-//               <h2 className="text-3xl font-black text-white mb-2">Wildora Zoo</h2>
-//               <p className="text-gray-200 text-sm leading-relaxed">
-//                 Step into the wild. Login to book your tickets and explore the amazing wildlife.
-//               </p>
-//             </div>
-//           </div>
-
-//           {/* જમણી બાજુ: ફોર્મ */}
-//           <div className="w-full md:w-1/2 p-8 md:p-12">
-            
-//             {/* ઉપરના 2 ટૅબ (Login / Register) */}
-//             <div className="flex bg-gray-100 p-1.5 rounded-xl mb-8">
-//               <button className="flex-1 py-2.5 rounded-lg font-bold bg-white text-forest-dark shadow-sm transition-all">
-//                 Login
-//               </button>
-//               <button 
-//                 onClick={() => navigate("/register")}
-//                 className="flex-1 py-2.5 rounded-lg font-bold text-gray-500 hover:text-forest-dark transition-all"
-//               >
-//                 Register
-//               </button>
-//             </div>
-
-//             <div className="text-center md:text-left mb-8">
-//               <h2 className="text-2xl font-black text-forest-dark mb-2">Welcome Back!</h2>
-//               <p className="text-gray-500 text-sm">Please enter your details to sign in.</p>
-//             </div>
-
-//             {/* લોગિન ફોર્મ */}
-//             <form onSubmit={handleSubmit} className="space-y-5">
-              
-//               {/* Email Field */}
-//               <div>
-//                 <label className="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
-//                 <div className="relative">
-//                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">✉️</span>
-//                   <input 
-//                     type="email" 
-//                     name="email"
-//                     value={form.email}
-//                     onChange={handleChange}
-//                     placeholder="Enter your email" 
-//                     required
-//                     className="w-full border border-gray-300 rounded-xl pl-11 pr-4 py-3 outline-none focus:ring-2 focus:ring-forest-light focus:border-forest-light transition-all bg-gray-50 focus:bg-white" 
-//                   />
-//                 </div>
-//               </div>
-
-//               {/* Password Field */}
-//               <div>
-//                 <label className="block text-sm font-bold text-gray-700 mb-2">Password</label>
-//                 <div className="relative">
-//                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">🔒</span>
-//                   <input 
-//                     type={showPassword ? "text" : "password"} 
-//                     name="password"
-//                     value={form.password}
-//                     onChange={handleChange}
-//                     placeholder="Enter your password" 
-//                     required
-//                     className="w-full border border-gray-300 rounded-xl pl-11 pr-16 py-3 outline-none focus:ring-2 focus:ring-forest-light focus:border-forest-light transition-all bg-gray-50 focus:bg-white" 
-//                   />
-//                   <button 
-//                     type="button"
-//                     onClick={() => setShowPassword(!showPassword)}
-//                     className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-forest-light hover:text-forest-dark uppercase"
-//                   >
-//                     {showPassword ? "Hide" : "Show"}
-//                   </button>
-//                 </div>
-//               </div>
-
-//               {/* Login Button */}
-//               <button 
-//                 type="submit" 
-//                 className="w-full bg-gradient-to-r from-forest-dark to-forest-light text-white py-3.5 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all mt-4"
-//               >
-//                 Login Now
-//               </button>
-//             </form>
-
-//             <p className="text-center text-sm text-gray-500 mt-8">
-//               Don't have an account?{" "}
-//               <button onClick={() => navigate("/register")} className="font-bold text-forest-dark hover:underline">
-//                 Register here
-//               </button>
-//             </p>
-
-//           </div>
-//         </div>
-//       </div>
-      
-//       <Footer />
-//     </>
-//   );
-// }
-
-// export default Login;
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
+
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Tickets() {
@@ -155,7 +18,9 @@ function Tickets() {
 
   const getSavedUser = () => {
     try {
-      return JSON.parse(sessionStorage.getItem("wildoraUser") || "null");
+      return JSON.parse(
+        sessionStorage.getItem("wildoraUser") || "null"
+      );
     } catch {
       return null;
     }
@@ -173,7 +38,7 @@ function Tickets() {
 
   const [quantities, setQuantities] = useState({});
 
-  // 🔥 Login Check (જો લોગિન ના હોય તો સીધા લોગિન પેજ પર મોકલો)
+  // Login Check
   useEffect(() => {
     const user = getSavedUser();
     const token = sessionStorage.getItem("wildoraToken");
@@ -201,7 +66,10 @@ function Tickets() {
 
   const fetchTickets = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/tickets/all");
+      const response = await fetch(
+        "http://localhost:5000/api/tickets/all"
+      );
+
       const result = await response.json();
 
       if (!response.ok) {
@@ -216,35 +84,44 @@ function Tickets() {
     }
   };
 
-  // Infant Ticket First, Remaining Order Same
-  const sortedTickets = [...tickets].sort((a, b) => {
-    const nameA = (a.ticketName || a.userName || "").trim().toLowerCase();
-    const nameB = (b.ticketName || b.userName || "").trim().toLowerCase();
-
-    if (nameA === "infant ticket") return -1;
-    if (nameB === "infant ticket") return 1;
-
-    return 0;
-  });
-
+  // Ticket Name
   const getTicketName = (ticket) =>
     ticket.ticketName || ticket.userName || "Zoo Ticket";
 
+  // Ticket Price
+  const getTicketPrice = (ticket) => {
+    const price = Number(ticket.price);
+    return Number.isFinite(price) && price >= 0 ? price : null;
+  };
+
+  // Selected Tickets
   const selectedTickets = tickets.filter(
     (ticket) => Number(quantities[ticket._id] || 0) > 0
   );
 
+  // Total Quantity
   const totalQuantity = selectedTickets.reduce(
-    (sum, ticket) => sum + Number(quantities[ticket._id]),
-    0
-  );
-
-  const totalAmount = selectedTickets.reduce(
     (sum, ticket) =>
-      sum + Number(ticket.price) * Number(quantities[ticket._id]),
+      sum + Number(quantities[ticket._id] || 0),
     0
   );
 
+  // Total Amount
+  const totalAmount = selectedTickets.reduce(
+    (sum, ticket) => {
+      const price = getTicketPrice(ticket);
+      const quantity = Number(quantities[ticket._id] || 0);
+
+      if (price === null || !Number.isFinite(quantity)) {
+        return sum;
+      }
+
+      return sum + price * quantity;
+    },
+    0
+  );
+
+  // Handle Input
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -252,8 +129,12 @@ function Tickets() {
     });
   };
 
+  // Handle Quantity
   const handleQuantity = (ticketId, value) => {
-    const quantity = Math.max(0, Math.min(10, Number(value) || 0));
+    const quantity = Math.max(
+      0,
+      Math.min(10, Number(value) || 0)
+    );
 
     setQuantities((previous) => ({
       ...previous,
@@ -261,6 +142,7 @@ function Tickets() {
     }));
   };
 
+  // Booking Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -269,12 +151,12 @@ function Tickets() {
 
     if (!token || !user) {
       toast.error("Please login before booking tickets.");
-      navigate("/Booking");
+      navigate("/login");
       return;
     }
 
     if (!user._id) {
-      toast.error("User ID not found. Please logout and login again.");
+      toast.error("User ID not found. Please login again.");
       return;
     }
 
@@ -299,29 +181,51 @@ function Tickets() {
       return;
     }
 
+    // Prepare Ticket Items
+    const ticketItems = selectedTickets.map((ticket) => {
+      const quantity = Number(quantities[ticket._id]);
+      const price = getTicketPrice(ticket);
+
+      return {
+        category:
+          ticket.ageGroup ||
+          ticket.ticketName ||
+          ticket.userName ||
+          "Zoo Ticket",
+        quantity,
+        subtotal: price === null ? NaN : price * quantity,
+      };
+    });
+
+    // Validate Price and Subtotal
+    const invalidTicket = ticketItems.some(
+      (item) =>
+        !Number.isFinite(item.quantity) ||
+        item.quantity <= 0 ||
+        !Number.isFinite(item.subtotal)
+    );
+
+    if (invalidTicket || !Number.isFinite(totalAmount)) {
+      toast.error("Invalid ticket price or quantity.");
+      return;
+    }
+
+    const bookingData = {
+      userId: user._id,
+      bookingDate: form.visitDate,
+      timeSlot: form.timeSlot,
+      ticketItems,
+      guestInfo: {
+        fullName: form.name.trim(),
+        email: form.email.trim(),
+        mobile: form.phone.trim(),
+      },
+      totalAmount,
+    };
+
     setLoading(true);
 
     try {
-      const bookingData = {
-        userId: user._id,
-        bookingDate: form.visitDate,
-        timeSlot: form.timeSlot,
-
-        ticketItems: selectedTickets.map((ticket) => ({
-          ticketId: ticket._id,
-          category: ticket.ageGroup || ticket.ticketName || ticket.userName,
-          quantity: Number(quantities[ticket._id]),
-        })),
-
-        addOns: [],
-
-        guestInfo: {
-          fullName: form.name.trim(),
-          email: form.email.trim(),
-          mobile: form.phone.trim(),
-        },
-      };
-
       const response = await fetch(
         "http://localhost:5000/api/bookings/create",
         {
@@ -340,7 +244,7 @@ function Tickets() {
         throw new Error(result.message || "Booking failed");
       }
 
-      toast.success("Ticket booking confirmed successfully!");
+      toast.success("🎉 Ticket booking confirmed successfully!");
 
       setQuantities({});
 
@@ -353,10 +257,10 @@ function Tickets() {
       });
 
       setTimeout(() => {
-        navigate("/my-tickets"); // 🔥 બુકિંગ પછી સીધા માય ટિકિટ્સ પેજ પર
+        navigate("/my-tickets");
       }, 1500);
-
     } catch (error) {
+      console.error("Booking Error:", error);
       toast.error(error.message || "Something went wrong.");
     } finally {
       setLoading(false);
@@ -368,22 +272,29 @@ function Tickets() {
   return (
     <>
       <Navbar />
+
       <div className="min-h-screen bg-[#f3f7ef]">
-        <ToastContainer position="top-right" autoClose={3000} theme="colored" />
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          theme="colored"
+        />
 
         {/* Hero Section */}
-        <section className="relative overflow-hidden bg-linear-to-r from-green-950 via-green-800 to-green-700 py-20 px-6 text-white">
+        <section className="relative overflow-hidden bg-gradient-to-r from-green-950 via-green-800 to-green-700 py-20 px-6 text-white">
           <div className="max-w-7xl mx-auto text-center relative z-10">
             <p className="text-lime-300 uppercase tracking-[4px] text-sm font-semibold">
               Wildora Wildlife Park
             </p>
 
             <h1 className="text-4xl md:text-6xl font-extrabold mt-5">
-              Book Your <span className="text-lime-300">Tickets</span>
+              Book Your{" "}
+              <span className="text-lime-300">Tickets</span>
             </h1>
 
             <p className="max-w-2xl mx-auto text-green-100 mt-5 text-lg">
-              Choose your tickets and enjoy an unforgettable wildlife experience with your family.
+              Choose your tickets and enjoy an unforgettable
+              wildlife experience with your family.
             </p>
           </div>
 
@@ -399,9 +310,11 @@ function Tickets() {
               <p className="text-green-700 font-bold uppercase tracking-widest text-sm">
                 Before Booking
               </p>
+
               <h2 className="text-3xl font-extrabold text-green-950 mt-2">
                 Age Information
               </h2>
+
               <p className="text-gray-500 mt-2">
                 Please check the age categories before selecting tickets.
               </p>
@@ -410,20 +323,32 @@ function Tickets() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
               <div className="bg-green-50 rounded-2xl p-6 text-center">
                 <div className="text-4xl mb-3">👶</div>
-                <h3 className="text-xl font-bold text-green-950">Child</h3>
-                <p className="text-gray-600 mt-2">Below 12 years</p>
+                <h3 className="text-xl font-bold text-green-950">
+                  Child
+                </h3>
+                <p className="text-gray-600 mt-2">
+                  Below 12 years
+                </p>
               </div>
 
               <div className="bg-green-50 rounded-2xl p-6 text-center">
                 <div className="text-4xl mb-3">🧑</div>
-                <h3 className="text-xl font-bold text-green-950">Adult</h3>
-                <p className="text-gray-600 mt-2">12 to 59 years</p>
+                <h3 className="text-xl font-bold text-green-950">
+                  Adult
+                </h3>
+                <p className="text-gray-600 mt-2">
+                  12 to 59 years
+                </p>
               </div>
 
               <div className="bg-green-50 rounded-2xl p-6 text-center">
                 <div className="text-4xl mb-3">👴</div>
-                <h3 className="text-xl font-bold text-green-950">Senior Citizen</h3>
-                <p className="text-gray-600 mt-2">60 years and above</p>
+                <h3 className="text-xl font-bold text-green-950">
+                  Senior Citizen
+                </h3>
+                <p className="text-gray-600 mt-2">
+                  60 years and above
+                </p>
               </div>
             </div>
           </div>
@@ -436,6 +361,7 @@ function Tickets() {
               <p className="text-green-700 font-bold uppercase tracking-widest text-sm">
                 Select Your Tickets
               </p>
+
               <h2 className="text-3xl md:text-4xl font-extrabold text-green-950 mt-2">
                 Available Ticket Types
               </h2>
@@ -447,13 +373,21 @@ function Tickets() {
           </div>
 
           {fetching ? (
-            <p className="text-center py-10 text-green-800">Loading tickets...</p>
-          ) : sortedTickets.length === 0 ? (
-            <p className="text-center py-10 text-gray-600">No tickets available right now.</p>
+            <p className="text-center py-10 text-green-800">
+              Loading tickets...
+            </p>
+          ) : tickets.length === 0 ? (
+            <p className="text-center py-10 text-gray-600">
+              No tickets available right now.
+            </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {sortedTickets.map((ticket) => {
-                const quantity = Number(quantities[ticket._id] || 0);
+              {tickets.map((ticket) => {
+                const quantity = Number(
+                  quantities[ticket._id] || 0
+                );
+
+                const price = getTicketPrice(ticket);
 
                 return (
                   <div
@@ -486,9 +420,14 @@ function Tickets() {
 
                     <div className="mt-3">
                       <span className="text-2xl font-extrabold text-green-800">
-                        ₹{ticket.price}
+                        {price === null ? "Price unavailable" : `₹${price}`}
                       </span>
-                      <span className="text-gray-500 ml-1 text-sm">/ person</span>
+
+                      {price !== null && (
+                        <span className="text-gray-500 ml-1 text-sm">
+                          / person
+                        </span>
+                      )}
                     </div>
 
                     <p className="text-sm text-gray-500 mt-2">
@@ -503,7 +442,9 @@ function Tickets() {
                       <div className="flex items-center justify-between gap-3">
                         <button
                           type="button"
-                          onClick={() => handleQuantity(ticket._id, quantity - 1)}
+                          onClick={() =>
+                            handleQuantity(ticket._id, quantity - 1)
+                          }
                           disabled={quantity === 0}
                           className="w-9 h-9 rounded-lg bg-green-100 text-green-900 font-bold text-xl disabled:opacity-40"
                         >
@@ -516,8 +457,10 @@ function Tickets() {
 
                         <button
                           type="button"
-                          onClick={() => handleQuantity(ticket._id, quantity + 1)}
-                          disabled={quantity >= 10}
+                          onClick={() =>
+                            handleQuantity(ticket._id, quantity + 1)
+                          }
+                          disabled={quantity >= 10 || price === null}
                           className="w-9 h-9 rounded-lg bg-green-900 text-white font-bold text-xl disabled:opacity-40"
                         >
                           +
@@ -526,7 +469,8 @@ function Tickets() {
 
                       {quantity > 0 && (
                         <p className="text-green-800 font-bold mt-3 text-sm">
-                          Subtotal: ₹{Number(ticket.price) * quantity}
+                          Subtotal: ₹
+                          {price === null ? "Invalid" : price * quantity}
                         </p>
                       )}
                     </div>
@@ -540,12 +484,13 @@ function Tickets() {
         {/* Booking Form and Summary */}
         <section className="max-w-7xl mx-auto px-6 pb-20">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-            
+
             {/* Booking Details */}
             <div className="lg:col-span-3 bg-white rounded-3xl shadow-lg p-7 md:p-10">
               <p className="text-green-700 font-bold uppercase tracking-widest text-sm">
                 Your Information
               </p>
+
               <h2 className="text-3xl font-extrabold text-green-950 mt-2 mb-8">
                 Booking Details
               </h2>
@@ -556,6 +501,7 @@ function Tickets() {
                     <label className="block font-semibold text-gray-700 mb-2">
                       Full Name
                     </label>
+
                     <input
                       type="text"
                       name="name"
@@ -571,6 +517,7 @@ function Tickets() {
                     <label className="block font-semibold text-gray-700 mb-2">
                       Email Address
                     </label>
+
                     <input
                       type="email"
                       name="email"
@@ -586,6 +533,7 @@ function Tickets() {
                     <label className="block font-semibold text-gray-700 mb-2">
                       Mobile Number
                     </label>
+
                     <input
                       type="tel"
                       name="phone"
@@ -603,6 +551,7 @@ function Tickets() {
                     <label className="block font-semibold text-gray-700 mb-2">
                       Visit Date
                     </label>
+
                     <input
                       type="date"
                       name="visitDate"
@@ -618,6 +567,7 @@ function Tickets() {
                     <label className="block font-semibold text-gray-700 mb-2">
                       Time Slot
                     </label>
+
                     <select
                       name="timeSlot"
                       value={form.timeSlot}
@@ -626,17 +576,29 @@ function Tickets() {
                       className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-600"
                     >
                       <option value="">Choose Visit Time</option>
-                      <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
-                      <option value="11:00 AM - 01:00 PM">11:00 AM - 01:00 PM</option>
-                      <option value="01:00 PM - 03:00 PM">01:00 PM - 03:00 PM</option>
-                      <option value="03:00 PM - 05:00 PM">03:00 PM - 05:00 PM</option>
+                      <option value="09:00 AM - 11:00 AM">
+                        09:00 AM - 11:00 AM
+                      </option>
+                      <option value="11:00 AM - 01:00 PM">
+                        11:00 AM - 01:00 PM
+                      </option>
+                      <option value="01:00 PM - 03:00 PM">
+                        01:00 PM - 03:00 PM
+                      </option>
+                      <option value="03:00 PM - 05:00 PM">
+                        03:00 PM - 05:00 PM
+                      </option>
                     </select>
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  disabled={loading || fetching || selectedTickets.length === 0}
+                  disabled={
+                    loading ||
+                    fetching ||
+                    selectedTickets.length === 0
+                  }
                   className="w-full bg-green-900 text-white py-4 rounded-xl font-bold text-lg hover:bg-green-800 transition disabled:opacity-50"
                 >
                   {loading ? "Booking..." : "Confirm Booking →"}
@@ -650,6 +612,7 @@ function Tickets() {
                 <p className="text-lime-300 uppercase tracking-widest text-sm font-bold">
                   Your Selection
                 </p>
+
                 <h2 className="text-2xl font-extrabold mt-2 mb-7">
                   Booking Summary
                 </h2>
@@ -660,22 +623,33 @@ function Tickets() {
                   </p>
                 ) : (
                   <div className="space-y-5">
-                    {selectedTickets.map((ticket) => (
-                      <div
-                        key={ticket._id}
-                        className="flex justify-between gap-3 border-b border-green-800 pb-4"
-                      >
-                        <div>
-                          <p className="font-bold">{getTicketName(ticket)}</p>
-                          <p className="text-green-200 text-sm mt-1">
-                            ₹{ticket.price} × {quantities[ticket._id]}
+                    {selectedTickets.map((ticket) => {
+                      const price = getTicketPrice(ticket);
+                      const quantity = Number(
+                        quantities[ticket._id]
+                      );
+
+                      return (
+                        <div
+                          key={ticket._id}
+                          className="flex justify-between gap-3 border-b border-green-800 pb-4"
+                        >
+                          <div>
+                            <p className="font-bold">
+                              {getTicketName(ticket)}
+                            </p>
+
+                            <p className="text-green-200 text-sm mt-1">
+                              ₹{price} × {quantity}
+                            </p>
+                          </div>
+
+                          <p className="font-bold">
+                            ₹{price * quantity}
                           </p>
                         </div>
-                        <p className="font-bold">
-                          ₹{Number(ticket.price) * Number(quantities[ticket._id])}
-                        </p>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
 
@@ -686,7 +660,10 @@ function Tickets() {
                   </div>
 
                   <div className="flex justify-between items-center">
-                    <span className="text-lg font-bold">Total Amount</span>
+                    <span className="text-lg font-bold">
+                      Total Amount
+                    </span>
+
                     <span className="text-3xl font-extrabold text-lime-300">
                       ₹{totalAmount}
                     </span>
@@ -694,7 +671,8 @@ function Tickets() {
                 </div>
 
                 <p className="text-green-200 text-xs mt-7 leading-5">
-                  Your booking details will be saved after you confirm your booking.
+                  Your booking details will be saved after you
+                  confirm your booking.
                 </p>
               </div>
             </div>
@@ -702,6 +680,7 @@ function Tickets() {
           </div>
         </section>
       </div>
+
       <Footer />
     </>
   );
