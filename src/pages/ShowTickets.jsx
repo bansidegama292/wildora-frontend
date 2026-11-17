@@ -254,6 +254,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Navbar from "../Components/Navbar";
+import Footer from "../Components/Footer";
 
 const CATEGORY_META = {
   child:  { emoji: "🐣", label: "Child",  tint: "from-pink-400 to-rose-400",    img: "https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=600&q=80" },
@@ -319,8 +321,10 @@ function ShowTickets() {
     items.reduce((s, i) => s + (Number(i.quantity) || 0), 0);
 
   return (
-    <div className="min-h-screen bg-[#f7f6f2] py-14 px-4">
-      <ToastContainer position="top-right" theme="light" />
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-[#f7f6f2] py-14 px-4">
+        <ToastContainer position="top-right" theme="light" />
 
       <div className="max-w-5xl mx-auto">
         <div className="mb-14">
@@ -496,6 +500,8 @@ function ShowTickets() {
         )}
       </div>
     </div>
+      <Footer />
+    </>
   );
 }
 

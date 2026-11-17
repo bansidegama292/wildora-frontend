@@ -269,7 +269,7 @@ function Tickets() {
 
     if (!token || !user) {
       toast.error("Please login before booking tickets.");
-      navigate("/login");
+      navigate("/Booking");
       return;
     }
 

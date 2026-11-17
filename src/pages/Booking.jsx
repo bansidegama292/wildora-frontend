@@ -309,7 +309,7 @@ import Footer from "../Components/Footer";
 function Booking() {
   const navigate = useNavigate();
 
-  // 🔥 લોગિન યુઝરની માહિતી (અહીં _id છે)
+  // 🔥 આ બે લાઈન ખૂટતી હતી, એટલે એરર આવતી હતી
   const loggedInUser = JSON.parse(sessionStorage.getItem("wildoraUser") || "null");
   const token = sessionStorage.getItem("wildoraToken");
 
@@ -354,7 +354,6 @@ function Booking() {
     tickets.adult * prices.adult +
     tickets.senior * prices.senior;
 
-  // 🔥 API કોલ અને userId
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -374,9 +373,9 @@ function Booking() {
 
     setLoading(true);
 
+    // બેકએન્ડમાં મોકલવા માટે ડેટા
     const bookingData = {
-      // 👇 આ છે તમારો userId (લોગિન કરેલા યુઝરની _id)
-      userId: loggedInUser._id, 
+      userId: loggedInUser._id,
       bookingDate: form.visitDate,
       timeSlot: form.timeSlot,
       ticketItems: [
@@ -398,7 +397,7 @@ function Booking() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // 🔥 હવે token ડિફાઇન થયું છે
         },
         body: JSON.stringify(bookingData),
       });
@@ -407,7 +406,7 @@ function Booking() {
 
       if (response.ok) {
         alert("🎉 Booking Confirmed successfully!");
-        navigate("/my-tickets"); 
+        navigate("/my-tickets");
       } else {
         alert(data.message || "Booking failed");
       }
